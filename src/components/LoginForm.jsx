@@ -4,6 +4,7 @@ import { loginSchema } from '../schema/validationSchema';
 import { useFormik } from 'formik';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { logInApi } from '../APIs/authApi';
 
 
 const LoginForm = ({ handleLogin }) => {
@@ -23,6 +24,8 @@ const LoginForm = ({ handleLogin }) => {
             try {
                 console.log(values, '----values', loading)
                 toast.success('Login up Completed')
+                const result = await logInApi(values)
+                
                 // navigate('/')
             } catch (error) {
                 console.log(error, 'Login failed');

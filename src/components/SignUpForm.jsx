@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { signUpApi } from '../APIs/authApi';
 
 const SignUpForm = ({ handleSignUp }) => {
     const navigate = useNavigate()
@@ -25,6 +26,8 @@ const SignUpForm = ({ handleSignUp }) => {
             try {
                 console.log(values, '----values', loading)
                 toast.success('Sign up Completed')
+                const result = await signUpApi(values)
+
                 // navigate('/')
             } catch (error) {
                 console.log(error, 'Login failed');
