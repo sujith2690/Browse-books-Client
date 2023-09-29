@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import './Login.css'
+import './Auth.css'
 import LoginForm from '../../components/LoginForm'
-import { useNavigate } from 'react-router-dom'
 import SignUpForm from '../../components/SignUpForm'
 
 const Auth = () => {

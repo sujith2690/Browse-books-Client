@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import Auth from './pages/login/Auth'
+import Auth from './pages/Auth/Auth'
 import Home from './pages/Home'
 import SinglePdt from './pages/SinglePdt'
 
