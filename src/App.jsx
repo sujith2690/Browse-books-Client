@@ -1,8 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import Login from './pages/Login'
+import Auth from './pages/login/Auth'
 import Home from './pages/Home'
-import SignUp from './pages/SignUp'
 import SinglePdt from './pages/SinglePdt'
 
 const App = () => {
@@ -10,8 +9,8 @@ const App = () => {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signUp" element={<SignUp />} />
+        <Route path="/login" element={<Auth />} />
+        <Route path="/signUp" element={<Auth />} />
         <Route path="/home" element={<Home />} />
         <Route path="/singlePdt/:id" element={<SinglePdt />} />
       </Routes>
