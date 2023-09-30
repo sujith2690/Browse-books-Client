@@ -25,11 +25,11 @@ const SignUpForm = ({ handleSignUp }) => {
             setLoading(true)
             try {
                 console.log(values, '----values', loading)
-                toast.success('Sign up Completed')
                 const result = await signUpApi(values)
-
-                // navigate('/')
+                console.log(result.data,'----signup res')
+                navigate('/')
             } catch (error) {
+                toast.error(error.response.data.message)
                 console.log(error, 'Login failed');
             } 
             action.resetForm();
