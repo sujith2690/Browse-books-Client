@@ -5,9 +5,12 @@ import { useFormik } from 'formik';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { logInApi } from '../APIs/authApi';
+import { useDispatch } from 'react-redux'
+import { accessToken, userDetails } from '../Redux/Features/userSlice';
 
 
 const LoginForm = ({ handleLogin }) => {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const [formValues, setFormValues] = useState({
@@ -24,8 +27,15 @@ const LoginForm = ({ handleLogin }) => {
             try {
                 console.log(values, '----values', loading)
                 const result = await logInApi(values)
-                console.log(result.data, '----signup res')
-                navigate('/')
+                console.log(result.data, '----login res')
+                const success = result.data.success
+                if (success) {
+                    dispatch(userDetails(result.data.User));
+                    dispatch(accessToken(result.data.Token));
+                    localStorage.setItem("Token", result.data.Token);
+                    localStorage.setItem("User", JSON.stringify(result.data.User));
+                    navigate('/')
+                }
             } catch (error) {
                 toast.error(error.response.data.message)
                 console.log(error, 'Login failed');

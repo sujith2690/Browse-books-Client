@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import {  Route, Routes } from 'react-router-dom'
 import Auth from './pages/Auth/Auth'
 import Home from './pages/Home'
 import SinglePdt from './pages/SinglePdt'
@@ -12,7 +12,7 @@ const App = () => {
         <Route path="/login" element={<Auth />} />
         <Route path="/signUp" element={<Auth />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/singlePdt/:id" element={<SinglePdt />} />
+        <Route path="/book/:id" element={<SinglePdt />} />
       </Routes>
     </>
   )

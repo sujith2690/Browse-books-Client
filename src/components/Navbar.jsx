@@ -9,7 +9,7 @@ const Navbar = () => {
                 <ul className="flex space-x-4 text-white">
                     <li><a href="/home" className="hover:underline">Home</a></li>
                     <div >
-                        <li><a href="/cart" className="hover:underline">Cart</a></li>
+                        <li><a href="/favorite" className="hover:underline">Favorite</a></li>
                     </div>
                     <div >
                         <li>
