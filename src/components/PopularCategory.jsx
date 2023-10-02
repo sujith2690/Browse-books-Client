@@ -4,17 +4,13 @@ import { getCategories } from '../APIs/bookApi'
 
 const PopularCategory = () => {
 const [categories, setCategories] = useState([])
-
     const allCategories = async () => {
         const cats = await getCategories()
-        console.log(cats.data.categories,'---result')
         setCategories(cats.data.categories)
-        const all = cats.data.categories
     }
     useEffect(() => {
         allCategories()
     }, [])
-
     return (
         <section className="py-12 text-white" style={{ backgroundColor: '#161616' }} >
             <div className="container mx-auto">

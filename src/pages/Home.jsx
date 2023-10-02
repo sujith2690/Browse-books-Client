@@ -8,9 +8,9 @@ import SearchBooks from '../components/SearchBooks'
 const Home = () => {
   return (
     <>
-    <Navbar/>
+    {/* <Navbar/>
     <Header/>
-    <PopularCategory/>
+    <PopularCategory/> */}
     <SearchBooks/>
     <FeaturedBooks/>
     </>

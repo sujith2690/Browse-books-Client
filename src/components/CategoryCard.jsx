@@ -4,9 +4,9 @@ const CategoryCard = ({ categories }) => {
 
     return (
         <>
-            {categories.map((item) => {
+            {categories.map((item,i) => {
                 return (
-                    <div className="flex flex-col justify-center items-center max-w-sm mx-auto my-8">
+                    <div key={i} className="flex flex-col justify-center items-center max-w-sm mx-auto my-8">
                         <div style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1507415492521-917f60c93bfe?auto=format&fit=crop&w=500&q=60")' }}
                             className="bg-gray-300 h-64 w-full rounded-lg shadow-md bg-cover bg-center"></div>
                         <div className="w-56 md:w-64 bg-white -mt-10 shadow-lg rounded-lg overflow-hidden">
