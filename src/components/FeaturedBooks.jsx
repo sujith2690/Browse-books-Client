@@ -1,35 +1,84 @@
 import React, { useEffect, useState } from 'react'
 import ProductCard from './ProductCard'
-import { getBooks } from '../APIs/bookApi'
+import { getBooks, getCategories } from '../APIs/bookApi'
 
 const FeaturedBooks = () => {
-    const [newBooks, setNewBooks] = useState([])
+    const [data, setData] = useState([])
+    const [newBooks, setNewBooks] = useState()
+    const [filterBooks, setFilterBooks] = useState([])
+    const [category, setCategory] = useState()
+    const values = [10, 5, 8, 9, 9, 4, 5]
     const getFeaturedBooks = async () => {
         const books = await getBooks()
-        console.log(books.data.books, '--------books')
+        setData(books.data.books)
         setNewBooks(books.data.books)
+        setFilterBooks(books.data.books)
+
+        // const CategoriesArray = await [...new Set(newBooks.map((item) => item.category))];
+        const CategoriesArray = await getCategories();
+
+        console.log(CategoriesArray.data.categories, '------')
+        setCategory(CategoriesArray.data.categories)
+    }
+
+    const filterType = (category) => {
+        setNewBooks(
+            filterBooks.filter((item) => {
+                return item.category === category
+            })
+        )
+    }
+    const filterPrice = (price) => {
+        setNewBooks(
+            filterBooks.filter((item) => {
+                return item.price <= price
+            })
+        )
     }
     useEffect(() => {
-        getFeaturedBooks();
-    }, []); 
+        getFeaturedBooks()
+    }, [])
 
     return (
         <section className="py-12 bg-gray-200">
             <div className="container mx-auto">
-                <h2 className="text-2xl md:text-3xl font-semibold mb-4">Featured Books</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    {newBooks.map((book, i) => { 
+                <h2 className="text-3xl md:text-3xl font-semibold mb-4 text-center">Featured Books</h2>
+                <div className='flex flex-col lg:flex-row justify-between'>
+                    <div>
+                        <p className='font-bold text-gray-800 mb-3'>Filter Type</p>
+                        <div className='flex justify-between flex-wrap'>
+                            <button onClick={() => setNewBooks(data)} className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>All</button>
+                            {category?.map((item, i) => (
+                                <button key={i} onClick={() => filterType(item)} className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>{item}</button>
+                            ))}
+                        </div>
+                    </div>
+                    <div>
+                        <p className='font-bold text-gray-800 mb-3 text-right'>Filter Price</p>
+                        <div className='flex justify-between max-w-[390px] w-full'>
+                            <button onClick={() => filterPrice(1000)} className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>1000</button>
+                            <button onClick={() => filterPrice(1500)} className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>1500</button>
+                            <button onClick={() => filterPrice(2000)} className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>2000</button>
+                            <button onClick={() => filterPrice(2500)} className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>2500</button>
+                            <button onClick={() => filterPrice(3000)} className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>3000</button>
+                        </div>
+                    </div>
+                </div>
+                <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" >
+                    {newBooks?.map((item, i) => {
                         return (
-                            <div key={i}>
-                                <div className="hover:shadow-2xl hover:border-yellow-500 border-4 ease-in-out duration-300">
-                                    <ProductCard values={book} />
+                            <div key={i} >
+                                <div className="hover:shadow-2xl hover:border-yellow-500 border-4 ease-in-out duration-300" >
+                                    <ProductCard values={item} />
                                 </div>
                             </div>
                         )
-                    })}
+                    })
+                    }
                 </div>
             </div>
-        </section>
+
+        </section >
     )
 }
 
