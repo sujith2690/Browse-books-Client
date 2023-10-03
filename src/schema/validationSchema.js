@@ -9,3 +9,11 @@ export const signUpSchema = Yup.object({
     password: Yup.string().min(3).required("Please enter your Password"),
     confirmPassword: Yup.string().required().oneOf([Yup.ref('password'), null], "Password Must match")
 })
+export const bookSchema = Yup.object({
+    title: Yup.string().min(1).max(25).required("Please enter your Title"),
+    bookType: Yup.string().required("Please Choose your Book Type"),
+    author: Yup.string().required("Please Choose your Book Author"),
+    price: Yup.number().required("Please Enter the price"),
+    imageUrl: Yup.string().required("Please enter your Image URL"),
+    description: Yup.string().required("Please enter Fill the Description"),
+})
