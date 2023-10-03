@@ -14,6 +14,6 @@ export const bookSchema = Yup.object({
     bookType: Yup.string().required("Please Choose your Book Type"),
     author: Yup.string().required("Please Choose your Book Author"),
     price: Yup.number().required("Please Enter the price"),
-    imageUrl: Yup.string().required("Please enter your Image URL"),
+    // imageUrl: Yup.string().required("Please enter your Image URL"),
     description: Yup.string().required("Please enter Fill the Description"),
 })

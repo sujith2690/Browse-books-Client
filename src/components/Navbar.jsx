@@ -15,6 +15,9 @@ const Navbar = () => {
                         <li><Link to="/addBook" className="hover:underline">AddBook</Link></li>
                     </div>
                     <div>
+                        <li><Link to="/addBook" className="hover:underline">MyBooks</Link></li>
+                    </div>
+                    <div>
                         <li>
                             <a className="cursor-pointer hover:underline">Logout</a>
                         </li>
