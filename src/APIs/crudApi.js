@@ -12,6 +12,7 @@ API.interceptors.request.use((req) => {
 
 
 export const addBook = (data) => API.post('/book/addBook', data)
+export const updateBook = (data) => API.post('/book/updateBook', data)
 export const uploadImage = (imageData) => API.post('/upload', imageData)
 
 export const myBooks = async () => {

@@ -6,6 +6,8 @@ import SinglePdt from './pages/SinglePdt'
 import AddBook from './pages/AddBook'
 import Favorite from './pages/Favorite'
 import MyBooks from './pages/Mybooks'
+import EditBooks from './components/EditBooks'
+import Edit from './components/Edit'
 
 const App = () => {
   return (
@@ -18,6 +20,8 @@ const App = () => {
         <Route path="/addBook" element={<AddBook />} />
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/myBooks" element={<MyBooks />} />
+        <Route path="/editBooks/:id" element={<EditBooks />} />
+        {/* <Route path="/editBooks/:id" element={<Edit />} /> */}
         <Route path="/book/:id" element={<SinglePdt />} />
       </Routes>
     </>
