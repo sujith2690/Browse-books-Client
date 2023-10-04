@@ -32,8 +32,8 @@ const LoginForm = ({ handleLogin }) => {
                 if (success) {
                     dispatch(userDetails(result.data.User));
                     dispatch(accessToken(result.data.Token));
-                    localStorage.setItem("Token", result.data.Token);
-                    localStorage.setItem("User", JSON.stringify(result.data.User));
+                    localStorage.setItem("token", result.data.Token);
+                    localStorage.setItem("user", JSON.stringify(result.data.User));
                     navigate('/')
                 }
             } catch (error) {

@@ -3,7 +3,6 @@ import { BsCartPlus } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom'
 
 const ProductCard = ({ values }) => {
-    console.log(values._id,'-------values')
     const navigate = useNavigate()
     return (
         <>

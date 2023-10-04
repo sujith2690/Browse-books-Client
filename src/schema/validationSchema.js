@@ -11,9 +11,8 @@ export const signUpSchema = Yup.object({
 })
 export const bookSchema = Yup.object({
     title: Yup.string().min(1).max(25).required("Please enter your Title"),
-    bookType: Yup.string().required("Please Choose your Book Type"),
+    category: Yup.string().required("Please Choose your Book Category"),
     author: Yup.string().required("Please Choose your Book Author"),
     price: Yup.number().required("Please Enter the price"),
-    // imageUrl: Yup.string().required("Please enter your Image URL"),
     description: Yup.string().required("Please enter Fill the Description"),
 })
