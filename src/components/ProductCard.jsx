@@ -3,13 +3,14 @@ import { BsCartPlus } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom'
 
 const ProductCard = ({ values }) => {
+    console.log(values.imageUrl,'--------values')
     const navigate = useNavigate()
     return (
         <>
             {values ?
                 <div className="flex justify-center items-center cursor-pointer" onClick={() => navigate(`/book/${values._id}`)}>
                     <div className="flex flex-col justify-between w-72 sm:w-96 h-96 bg-white bg-center text-gray-800 overflow-hidden"
-                        style={{ backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundImage: 'url("https://images.unsplash.com/photo-1507415492521-917f60c93bfe?auto=format&fit=crop&w=500&q=60")' }}>
+                        style={{ backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundImage: `url(${values.imageUrl})` }}>
                         <div className="flex justify-between items-center ml-4 pr-8">
                             <div className="bg-indigo-500 text-white bg-opacity-95 shadow px-2 py-1 flex items-center font-bold text-xs rounded">
                                 {values.category}

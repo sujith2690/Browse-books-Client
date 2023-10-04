@@ -13,3 +13,17 @@ API.interceptors.request.use((req) => {
 
 export const addBook = (data) => API.post('/book/addBook', data)
 export const uploadImage = (imageData) => API.post('/upload', imageData)
+
+export const myBooks = async () => {
+    try {
+        const response = await API.get('/book/myBook');
+        if (response.status === 200) {
+            return response.data;
+        } else {
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+    } catch (error) {
+        console.error('Error fetching my books:', error);
+        throw error; 
+    }
+};
