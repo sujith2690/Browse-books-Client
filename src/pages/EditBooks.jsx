@@ -5,7 +5,7 @@ import { bookDetails } from '../APIs/searchApi';
 import { getCategories } from '../APIs/bookApi';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Navbar from './Navbar';
+import Navbar from '../components/Navbar';
 import { addBook, updateBook, uploadImage } from '../APIs/crudApi';
 
 const EditBooks = () => {

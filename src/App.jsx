@@ -6,7 +6,7 @@ import SinglePdt from './pages/SinglePdt'
 import AddBook from './pages/AddBook'
 import Favorite from './pages/Favorite'
 import MyBooks from './pages/Mybooks'
-import EditBooks from './components/EditBooks'
+import EditBooks from './pages/EditBooks'
 import Edit from './components/Edit'
 
 const App = () => {
