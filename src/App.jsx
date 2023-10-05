@@ -1,5 +1,5 @@
 import React from 'react'
-import {  Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Auth from './pages/Auth/Auth'
 import Home from './pages/Home'
 import SinglePdt from './pages/SinglePdt'
@@ -7,11 +7,13 @@ import AddBook from './pages/AddBook'
 import Favorite from './pages/Favorite'
 import MyBooks from './pages/Mybooks'
 import EditBooks from './pages/EditBooks'
-import Edit from './components/Edit'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
     <>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Auth />} />
@@ -21,7 +23,6 @@ const App = () => {
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/myBooks" element={<MyBooks />} />
         <Route path="/editBooks/:id" element={<EditBooks />} />
-        {/* <Route path="/editBooks/:id" element={<Edit />} /> */}
         <Route path="/book/:id" element={<SinglePdt />} />
       </Routes>
     </>

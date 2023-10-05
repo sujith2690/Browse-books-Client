@@ -25,24 +25,30 @@ const EditBooks = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            const bookId = id;
             let values = bookData;
             if (!image) {
-                { imageFile ? values.imageUrl = imageFile : toast.error("Choose image") }
+                values.imageUrl = imageFile
+                let book = await updateBook(bookId, values);
+                console.log(book.data.message)
+                toast.success(book.data.message)
             } else {
                 const bookId = id;
                 const base64 = await convertBase64(image);
-                const imgUrl = await uploadImage({ image: base64 });
-                values.imageUrl = imgUrl.data;
-                values.bookId = bookId;
+                // const imgUrl = await uploadImage({ image: base64 });
+                // values.imageUrl = imgUrl.data;
+                values.imageUrl = base64;
+                // values.bookId = bookId;
                 toast.success("Books Updated")
-                let book = await updateBook(values);
-                navigate('/myBooks');
-                imageRef.current.value = '';
-                setImage(null);
-                setBookData({
-                    title: '', category: '', description: '', author: '', price: '',
-                });
+                let book = await updateBook(bookId, values);
+                toast.success(book.data.message)
             }
+            imageRef.current.value = '';
+            setImage(null);
+            setBookData({
+                title: '', category: '', description: '', author: '', price: '',
+            });
+            navigate('/myBooks');
         } catch (error) {
             console.log(error);
         }
@@ -117,7 +123,7 @@ const EditBooks = () => {
                             </label>
                             <div className="w-[17rem] relative ">
                                 <img
-                                    src={image ? URL.createObjectURL(image) : imageFile}
+                                    src={image ? URL.createObjectURL(image) : imageFile?.url}
                                     alt=""
                                     className="relative object-contain rounded-md bg-gray-500"
                                 />

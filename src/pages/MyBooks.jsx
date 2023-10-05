@@ -9,9 +9,6 @@ const MyBooks = () => {
         const all = await myBooks()
         setBooks(all)
     }
-    Books.map((item) => {
-        console.log(item, '--------------')
-    })
     useEffect(() => {
         userBooks()
     }, [])

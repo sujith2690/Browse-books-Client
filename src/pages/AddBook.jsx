@@ -33,15 +33,16 @@ const AddBook = () => {
       } else {
         try {
           const base64 = await convertBase64(image);
-          const imgUrl = await uploadImage({ image: base64 })
-          values.imageUrl = imgUrl.data
+          values.imageUrl = base64
           let book = await addBook(values)
+          toast.success(book.data.message)
         } catch (error) {
           console.log(error)
         }
         imageRef.current.value = '';
         setImage(null)
         action.resetForm()
+        navigate('/myBooks')
       }
     },
   });
