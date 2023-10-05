@@ -12,10 +12,12 @@ API.interceptors.request.use((req) => {
 
 
 export const addBook = (data) => API.post('/book/addBook', data)
-export const updateBook = (id,data) => API.post(`/book/updateBook/${id}`, data)
+export const updateBook = (id, data) => API.post(`/book/updateBook/${id}`, data)
 export const uploadImage = (imageData) => API.post('/upload', imageData)
+export const deleteBook = (id) => API.delete(`/book/deleteBook/${id}`)
+export const likeBook = (id) => API.put(`/book/likeBook/${id}`)
 
-export const deleteBook =(id)=>API.delete(`/book/deleteBook/${id}`)
+export const myFavoriteBooks = () => API.get('/book/myFavoriteBooks')
 
 export const myBooks = async () => {
     try {
@@ -27,6 +29,6 @@ export const myBooks = async () => {
         }
     } catch (error) {
         console.error('Error fetching my books:', error);
-        throw error; 
+        throw error;
     }
 };

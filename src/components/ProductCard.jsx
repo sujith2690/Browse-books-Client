@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { BsFillSuitHeartFill, BsPencil } from 'react-icons/bs';
 import { FaTrashAlt, FaEye } from 'react-icons/fa';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import { deleteBook } from '../APIs/crudApi';
+import { deleteBook, likeBook } from '../APIs/crudApi';
 import Modal from './Modal';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { removeBook } from '../Redux/Features/bookSlice';
+import { addFavoriteBook, removeBook, removeFavoriteBook } from '../Redux/Features/bookSlice';
 
-const ProductCard = ({ values,userBooks }) => {
+const ProductCard = ({ values, userBooks }) => {
     const dispatch = useDispatch()
     const [remove, setRemove] = useState(false)
     const [showModel, setShowModel] = useState(false)
@@ -36,8 +36,17 @@ const ProductCard = ({ values,userBooks }) => {
         toast.warning("Book Not Deleted")
         if (remove) setRemove(false)
     }
-    const handleLike = () => {
-        toast.success('Add To Favorite List')
+    const handleLike = async () => {
+        console.log('here....')
+        const liked = await likeBook(bookId)
+        console.log(liked.data.message, '---------')
+        if (liked.data.message === 'Book UnLiked') {
+            toast.success(liked.data.message)
+            dispatch(removeFavoriteBook(liked.data.bookDetails))
+        } else {
+            toast.success(liked.data.message)
+            dispatch(addFavoriteBook(liked.data.bookDetails))
+        }
     }
     const handleMove = () => {
         navigate(`/book/${bookId}`)
