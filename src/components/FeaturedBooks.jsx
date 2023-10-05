@@ -1,36 +1,36 @@
 import React, { useEffect, useState } from 'react'
 import ProductCard from './ProductCard'
 import { getBooks, getCategories } from '../APIs/bookApi'
+import { storeBooks } from '../Redux/Features/bookSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 const FeaturedBooks = () => {
+    const dispatch = useDispatch()
     const [data, setData] = useState([])
-    const [newBooks, setNewBooks] = useState()
-    const [filterBooks, setFilterBooks] = useState([])
+    const [newBooks, setNewBooks] = useState([])
     const [category, setCategory] = useState()
-    const values = [10, 5, 8, 9, 9, 4, 5]
+
+    const books = useSelector((state) => state.bookStore.books)
+    console.log(data, '------data store')
     const getFeaturedBooks = async () => {
-        const books = await getBooks()
-        setData(books.data.books)
-        setNewBooks(books.data.books)
-        setFilterBooks(books.data.books)
-
-        // const CategoriesArray = await [...new Set(newBooks.map((item) => item.category))];
+        const allData = await getBooks()
+        const bookDetails = allData.data.books
+        dispatch(storeBooks(bookDetails))
+        setData(books)
         const CategoriesArray = await getCategories();
-
-        console.log(CategoriesArray.data.categories, '------')
         setCategory(CategoriesArray.data.categories)
     }
 
     const filterType = (category) => {
         setNewBooks(
-            filterBooks.filter((item) => {
+            data.filter((item) => {
                 return item.category === category
             })
         )
     }
     const filterPrice = (price) => {
         setNewBooks(
-            filterBooks.filter((item) => {
+            data.filter((item) => {
                 return item.price <= price
             })
         )
@@ -47,7 +47,9 @@ const FeaturedBooks = () => {
                     <div>
                         <p className='font-bold text-gray-800 mb-3'>Filter Type</p>
                         <div className='flex justify-between flex-wrap'>
-                            <button onClick={() => setNewBooks(data)} className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>All</button>
+                            <button
+                                onClick={() => setNewBooks(data)}
+                                className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>All</button>
                             {category?.map((item, i) => (
                                 <button key={i} onClick={() => filterType(item)} className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>{item}</button>
                             ))}
@@ -61,6 +63,7 @@ const FeaturedBooks = () => {
                             <button onClick={() => filterPrice(2000)} className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>2000</button>
                             <button onClick={() => filterPrice(2500)} className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>2500</button>
                             <button onClick={() => filterPrice(3000)} className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>3000</button>
+                            <button onClick={() => filterPrice(300000)} className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>More</button>
                         </div>
                     </div>
                 </div>
