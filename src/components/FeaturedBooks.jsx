@@ -17,6 +17,7 @@ const FeaturedBooks = () => {
         const bookDetails = allData.data.books
         dispatch(storeBooks(bookDetails))
         setData(books)
+        setNewBooks(books)
         const CategoriesArray = await getCategories();
         setCategory(CategoriesArray.data.categories)
     }

@@ -8,11 +8,11 @@ import SearchBooks from '../components/SearchBooks'
 const Home = () => {
   return (
     <>
-    {/* <Navbar/>
+    <Navbar/>
     <Header/>
-    <SearchBooks/> */}
+    <SearchBooks/>
     <FeaturedBooks/>
-    {/* <PopularCategory/> */}
+    <PopularCategory/>
     </>
   )
 }

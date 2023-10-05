@@ -1,29 +1,37 @@
-import {createSlice} from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    books:[],
-    myBooks:[],
-    favBooks:[]
+    books: [],
+    myBooks: [],
+    favBooks: []
 }
 const bookSlice = createSlice({
-    name:'bookSlice',
+    name: 'bookSlice',
     initialState,
-    reducers:{
-        storeBooks:(state,action)=>{
+    reducers: {
+        storeBooks: (state, action) => {
             state.books = action.payload
         },
-        addBook:(state,action)=>{
+        myBookStore: (state, action) => {
+            state.myBooks = action.payload
+        }
+        , addNewBook: (state, action) => {
+            state.books.unshift(action.payload),
             state.myBooks.unshift(action.payload)
         },
-        removeBook:(state,action)=>{
-            state.myBooks = state.myBooks.filter((std)=>std._id!==action.payload)
+        removeBook: (state, action) => {
+            state.myBooks = state.myBooks.filter((std) => std._id !== action.payload)
         },
-        updateBook:(state,action)=>{
-            state.myBooks = state.myBooks.filter((std)=>std._id!==action.payload.id)
-            state.myBooks.unshift(action.payload.student)
+        updateBook: (state, action) => {
+            const updatedBookIndex = state.myBooks.findIndex(book => book._id === action.payload.id);
+            const BookIndex = state.myBooks.findIndex(book => book._id === action.payload.id);
+            if (updatedBookIndex !== -1) {
+                state.myBooks[updatedBookIndex] = action.payload.updatedBook,
+                state.books[BookIndex] = action.payload.updatedBook
+            }
         }
     }
 })
 
-export const {storeBooks,addBook,removeBook,updateBook} =bookSlice.actions;
+export const { storeBooks, myBookStore, addNewBook, removeBook, updateBook } = bookSlice.actions;
 export default bookSlice.reducer;

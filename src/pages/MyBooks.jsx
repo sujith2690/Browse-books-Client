@@ -25,11 +25,11 @@ const MyBooks = () => {
                             <>
                                 {Books.map((book, i) => (
                                     <div key={i} className="hover:shadow-2xl hover:border-yellow-500 border-4 ease-in-out duration-300">
-                                        <ProductCard values={book} />
+                                        <ProductCard userBooks={userBooks} values={book} />
                                     </div>
                                 ))}
                             </>
-                        ) : ('')}
+                        ) : (<p>No Books Added</p>)}
                     </div>
                 </div>
             </section>

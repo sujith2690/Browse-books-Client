@@ -6,10 +6,13 @@ import { useNavigate } from 'react-router-dom';
 import { bookSchema } from '../schema/validationSchema';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { addBook, uploadImage } from '../APIs/crudApi';
+import { addBook } from '../APIs/crudApi';
 import { getCategories } from '../APIs/bookApi';
+import { useDispatch } from 'react-redux';
+import { addNewBook } from '../Redux/Features/bookSlice';
 
 const AddBook = () => {
+  const dispatch = useDispatch()
   const imageRef = useRef();
   const [image, setImage] = useState(null);
   const [bookTypes, setBookTypes] = useState([])
@@ -35,6 +38,7 @@ const AddBook = () => {
           const base64 = await convertBase64(image);
           values.imageUrl = base64
           let book = await addBook(values)
+          dispatch(addNewBook(book.data.savedBook))
           toast.success(book.data.message)
         } catch (error) {
           console.log(error)

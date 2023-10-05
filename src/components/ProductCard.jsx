@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { BsFillSuitHeartFill, BsPencil } from 'react-icons/bs';
-import { FaTrashAlt } from 'react-icons/fa';
+import { FaTrashAlt, FaEye } from 'react-icons/fa';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { deleteBook } from '../APIs/crudApi';
 import Modal from './Modal';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { removeBook } from '../Redux/Features/bookSlice';
 
-const ProductCard = ({ values }) => {
+const ProductCard = ({ values,userBooks }) => {
+    const dispatch = useDispatch()
     const [remove, setRemove] = useState(false)
     const [showModel, setShowModel] = useState(false)
     const navigate = useNavigate();
@@ -17,7 +20,9 @@ const ProductCard = ({ values }) => {
     const handleDelete = async () => {
         if (remove === true) {
             const response = await deleteBook(bookId)
+            dispatch(removeBook(bookId))
             console.log('----------deleted')
+            userBooks()
             toast.success('Book Deleted')
             setShowModel(false)
             setRemove(false)
@@ -25,7 +30,6 @@ const ProductCard = ({ values }) => {
         else {
             setRemove(true)
             setShowModel(true)
-            // setCurrentId(id)
         }
     }
     const removeCancel = () => {
@@ -60,15 +64,18 @@ const ProductCard = ({ values }) => {
                             </div>
                         </div>
                         <div className="bg-white bg-opacity-95 p-4 flex flex-col mr-4 mb-8"
-                            onClick={handleMove}
+
                         >
                             <div className='flex items-center justify-between'>
                                 <h3 className="truncate text-xl font-bold pb-2">
                                     {values.title}
                                 </h3>
-                                {isMyBooksPage ?
-                                    <FaTrashAlt className='text-lg text-red-600' onClick={handleDelete} /> : ''
-                                }
+                                <div className='flex flex-col gap-4'>
+                                    {isMyBooksPage ?
+                                        <FaTrashAlt className='text-lg text-red-600' onClick={handleDelete} /> : ''
+                                    }
+                                    <FaEye onClick={handleMove} />
+                                </div>
                             </div>
                             <p className="truncate text-gray-500 text-sm">
                                 {values.description}
