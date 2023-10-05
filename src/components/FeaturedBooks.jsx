@@ -11,7 +11,6 @@ const FeaturedBooks = () => {
     const [category, setCategory] = useState()
 
     const books = useSelector((state) => state.bookStore.books)
-    console.log(data, '------data store')
     const getFeaturedBooks = async () => {
         const allData = await getBooks()
         const bookDetails = allData.data.books

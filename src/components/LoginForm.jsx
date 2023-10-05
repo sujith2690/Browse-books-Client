@@ -25,11 +25,10 @@ const LoginForm = ({ handleLogin }) => {
         onSubmit: async (values, action) => {
             setLoading(true)
             try {
-                console.log(values, '----values', loading)
                 const result = await logInApi(values)
-                console.log(result.data, '----login res')
                 const success = result.data.success
                 if (success) {
+
                     dispatch(userDetails(result.data.User));
                     dispatch(accessToken(result.data.Token));
                     localStorage.setItem("token", result.data.Token);

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import { useParams } from 'react-router-dom'
 import { bookDetails } from '../APIs/searchApi'
+import { toast } from 'react-toastify'
 
 const SinglePdt = () => {
   const [data, setData] = useState()
@@ -14,7 +15,9 @@ const SinglePdt = () => {
   useEffect(() => {
     getBook(id)
   }, [])
-
+const handleLike=()=>{
+  toast.success("Book Add To Favourite")
+}
 
   return (
     <>
@@ -48,7 +51,7 @@ const SinglePdt = () => {
                         <span className="font-bold text-5xl leading-none align-baseline">{data.price}</span>
                       </div>
                       <div className="inline-block align-bottom">
-                        <button className="bg-yellow-500 text-white hover:bg-indigo-500 rounded-full px-10 py-2 font-semibold">
+                        <button className="bg-yellow-500 text-white hover:bg-indigo-500 rounded-full px-10 py-2 font-semibold" onClick={handleLike}>
                           Add to Favorite
                         </button>
                       </div>

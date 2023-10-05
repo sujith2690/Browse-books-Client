@@ -8,7 +8,7 @@ const persistConfig = {
     key: 'root',
     version: 1,
     storage,
-    whitelist: ['bookStore']
+    whitelist: ['bookStore','user']
 };
 const reducer = combineReducers({
     user: userSlice,

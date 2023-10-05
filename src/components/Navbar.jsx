@@ -6,19 +6,21 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { resetUser } from '../Redux/Features/userSlice';
 
 
-const navigation = [
-
+const path = [
     { name: 'Home', href: '/', current: true },
-    { name: 'My Blogs', href: '/myBooks', current: false },
-    { name: 'Add Blogs', href: '/addBook', current: false },
-    { name: 'Favorite', href: '/favorite', current: false },
 ];
-
+const navigation = [
+    { name: 'Home', href: '/', current: true },
+    { name: 'My Books', href: '/myBooks', current: false },
+    { name: 'Add Books', href: '/addBook', current: false },
+    { name: 'Favorite', href: '/favorite', current: false },
+]
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
 }
 
 const Navbar = () => {
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const user = useSelector((state) => state.user.userDetails)
@@ -113,7 +115,7 @@ const Navbar = () => {
                                         onClick={handleLogout}
                                         className="block px-4 py-2 text-sm cursor-pointer text-gray-700 hover:bg-gray-100 hover:font-bold"
                                     >
-                                        Sign out
+                                        {user.name ? 'Sign out' : 'Login'}
                                     </p>
                                 </div>
                             )}
@@ -125,7 +127,7 @@ const Navbar = () => {
             {open && (
                 <div className="sm:hidden">
                     <div className="space-y-1 px-2 pb-3 pt-2">
-                        {navigation.map((item) => (
+                        {user.name ? navigation.map((item) => (
                             <Link
                                 key={item.name}
                                 to={item.href}
@@ -139,7 +141,22 @@ const Navbar = () => {
                             >
                                 {item.name}
                             </Link>
-                        ))}
+                        ))
+                            : path.map((item) => (
+                                <Link
+                                    key={item.name}
+                                    to={item.href}
+                                    onClick={() => setOpen(!open)}
+                                    className={classNames(
+                                        item.href === location.pathname
+                                            ? 'bg-gray-900 text-white'
+                                            : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                        'block rounded-md px-3 py-2 text-base font-medium'
+                                    )}
+                                >
+                                    {item.name}
+                                </Link>
+                            ))}
 
                     </div>
                 </div>
