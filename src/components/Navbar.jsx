@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { HiUserCircle, HiOutlineBell, HiOutlineMenuAlt3, HiX } from 'react-icons/hi';
 import { ImBlogger2 } from 'react-icons/im';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { resetUser } from '../Redux/Features/userSlice';
+import { allNotion, clearNotes } from '../APIs/crudApi';
 
 
 const path = [
@@ -20,13 +21,14 @@ function classNames(...classes) {
 }
 
 const Navbar = () => {
-
+    const [notifier, setNotifier] = useState([])
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const user = useSelector((state) => state.user.userDetails)
     const location = useLocation();
     const [open, setOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
+    const [notes, setNotes] = useState(false)
     const toggleMenu = () => {
         setOpen(!open);
     };
@@ -34,12 +36,33 @@ const Navbar = () => {
     const toggleProfileMenu = () => {
         if (user) setProfileOpen(!profileOpen);
     };
+    const toggleNotification = async () => {
+        if (notes) {
+            console.log('.............on')
+            const clear = await clearNotes()
+            setNotifier([])
+            console.log(clear.data, '----')
+            setNotes(!notes);
+        } else {
+            console.log('.............off')
+            setNotes(!notes);
+        }
+    };
     const handleLogout = () => {
         dispatch(resetUser())
         localStorage.clear()
         setProfileOpen(!profileOpen);
         navigate('/login')
     }
+    const getNotification = async () => {
+        const not = await allNotion()
+        console.log(not.data.notifications)
+        setNotifier(not.data.notifications)
+    }
+    useEffect(() => {
+        getNotification()
+    }, [])
+
     return (
         <div className=" bg-indigo-500 ">
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -55,7 +78,7 @@ const Navbar = () => {
                             {open ? (
                                 <HiX className="block h-6 w-6" aria-hidden="true" />
                             ) : (
-                                <HiOutlineMenuAlt3 className="block h-6 w-6" aria-hidden="true" />
+                                <HiOutlineMenuAlt3 className="block h-6 w-6 text-white" aria-hidden="true" />
                             )}
                         </button>
                     </div>
@@ -82,15 +105,31 @@ const Navbar = () => {
                         </div>
                     </div>
                     <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+
                         <button
                             type="button"
-                            onClick={toggleMenu}
-                            className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                        >
-                            <span className="absolute -inset-1.5" />
-                            <span className="sr-only">View notifications</span>
+                            onClick={toggleNotification}
+                            className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white hover:outline-none hover:ring-2 hover:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                        ><span className='relative text-white font-bold'>
+                                {notifier.length > 0 && (
+                                    <span className="bg-red-500 rounded-full h-4 w-4 text-xs absolute top-0 right-0 -mt-1 -mr-1 flex items-center justify-center">
+                                        {notifier.length}
+                                    </span>
+                                )}
+                            </span>
                             <HiOutlineBell className="h-6 w-6" aria-hidden="true" />
                         </button>
+                        {notes && notifier.length > 0 && (
+                            <div className="absolute right-0 z-10  w-48  mt-40 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                {notifier.map((item, i) => {
+                                    return (
+                                        <p key={i} onClick={() => navigate(`/book/${item.bookId}`)} className="block px-4 py-2 text-sm cursor-pointer text-gray-700 hover:bg-gray-100 hover:font-bold">
+                                            {item.content}
+                                        </p>
+                                    )
+                                })}
+                            </div>
+                        )}
                         <div className="relative ml-3">
                             <button
                                 onClick={toggleProfileMenu}

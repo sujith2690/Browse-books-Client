@@ -17,6 +17,9 @@ export const uploadImage = (imageData) => API.post('/upload', imageData)
 export const deleteBook = (id) => API.delete(`/book/deleteBook/${id}`)
 export const likeBook = (id) => API.put(`/book/likeBook/${id}`)
 
+export const allNotion =()=>API.get('/book/notion')
+export const clearNotes =()=>API.patch('/book/clearNotes')
+
 export const myFavoriteBooks = () => API.get('/book/myFavoriteBooks')
 
 export const myBooks = async () => {
