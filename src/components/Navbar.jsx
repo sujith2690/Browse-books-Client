@@ -63,9 +63,15 @@ const Navbar = () => {
         getNotification()
         localStorage.setItem("token", token);
     }, [])
+    const handleClose = async(e) => {
+        console.log('--------pressed')
+            const clear = await clearNotes()
+            setNotifier([])
+            setNotes(!notes);
+    }
 
     return (
-        <div className=" bg-indigo-500 ">
+        <div id='container' onClick={handleClose} className=" bg-indigo-500  ">
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                 <div className="relative flex h-16 items-center justify-between">
                     <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
