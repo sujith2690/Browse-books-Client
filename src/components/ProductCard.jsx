@@ -15,7 +15,7 @@ const ProductCard = ({ values, userBooks }) => {
     const [showModel, setShowModel] = useState(false)
     const navigate = useNavigate();
     const location = useLocation();
-    const bookId = values._id
+    const bookId = values?._id
     const handleClose = () => setShowModel(false)
     const handleDelete = async () => {
         if (remove === true) {
@@ -37,7 +37,7 @@ const ProductCard = ({ values, userBooks }) => {
     }
     const handleLike = async () => {
         if (user) {
-            const liked = await likeBook(id)
+            const liked = await likeBook(bookId)
             if (liked.data.message === 'Book UnLiked') {
                 toast.success(liked.data.message)
                 dispatch(removeFavoriteBook(liked.data.bookDetails))

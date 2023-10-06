@@ -173,12 +173,7 @@ const SignUpForm = ({ handleSignUp }) => {
                             Confirm OTP
                         </button>
                     </div>}
-                    <div className="text-right text-gray-400  hover:text-gray-100">
-                        <p className='cursor-pointer' >Resend OTP</p>
-                    </div>
                 </form >
-
-
             }
 
         </>

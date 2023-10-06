@@ -48,7 +48,7 @@ const Favorite = () => {
                                     </div>
                                 ))}
                             </>
-                        ) : (<p>No Books Added</p>)}
+                        ) : ( (<h1 className='text-3xl text-center'>No Books Added</h1>))}
                     </div>
                 </div>
             </section>
