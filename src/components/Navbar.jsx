@@ -65,9 +65,8 @@ const Navbar = () => {
     }, [])
     const handleClose = async(e) => {
         console.log('--------pressed')
-            const clear = await clearNotes()
-            setNotifier([])
-            setNotes(!notes);
+            // setNotifier([])
+            // setNotes(!notes);
     }
 
     return (
