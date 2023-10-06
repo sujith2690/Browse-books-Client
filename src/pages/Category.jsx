@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import { categoryBooks } from '../APIs/bookApi';
 import ProductCard from '../components/ProductCard';
+import Footer from '../components/Footer';
 
 const Category = () => {
     const [Books, setBooks] = useState([])
@@ -10,15 +11,15 @@ const Category = () => {
     const parts = Page.split('/');
     const category = parts[parts.length - 1];
 
-    const getCategoryBooks =async()=>{
+    const getCategoryBooks = async () => {
         const allData = await categoryBooks(category)
         setBooks(allData.data.books)
     }
     useEffect(() => {
         getCategoryBooks()
-    
+
     }, [])
-    
+
     return (
         <>
             <Navbar />
@@ -39,6 +40,7 @@ const Category = () => {
                     </div>
                 </div>
             </section>
+            <Footer />
         </>
     )
 }

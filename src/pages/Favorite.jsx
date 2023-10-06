@@ -5,6 +5,7 @@ import { bookDetails } from '../APIs/searchApi'
 import ProductCard from '../components/ProductCard'
 import { useDispatch, useSelector } from 'react-redux'
 import { favoriteBooksData } from '../Redux/Features/bookSlice'
+import Footer from '../components/Footer'
 
 const Favorite = () => {
     const Books = useSelector((state) => state.bookStore.favBooks)
@@ -51,6 +52,7 @@ const Favorite = () => {
                     </div>
                 </div>
             </section>
+            <Footer />
         </>)
 }
 

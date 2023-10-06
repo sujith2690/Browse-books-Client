@@ -5,6 +5,7 @@ import { bookDetails } from '../APIs/searchApi'
 import { toast } from 'react-toastify'
 import { likeBook } from '../APIs/crudApi'
 import { useSelector } from 'react-redux'
+import Footer from '../components/Footer'
 
 const SinglePdt = () => {
   const user = useSelector((state)=>state.user.userDetails._id)
@@ -72,6 +73,7 @@ const SinglePdt = () => {
                   </div> </div>
               </div>
             </div>
+            <Footer/>
           </div>
           : ''
       }

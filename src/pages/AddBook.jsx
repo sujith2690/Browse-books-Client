@@ -10,6 +10,7 @@ import { addBook } from '../APIs/crudApi';
 import { getCategories } from '../APIs/bookApi';
 import { useDispatch } from 'react-redux';
 import { addNewBook } from '../Redux/Features/bookSlice';
+import Footer from '../components/Footer';
 
 const AddBook = () => {
   const dispatch = useDispatch()
@@ -242,6 +243,7 @@ const AddBook = () => {
           </div>
         </form>
       </section>
+      <Footer />
     </>
   );
 };

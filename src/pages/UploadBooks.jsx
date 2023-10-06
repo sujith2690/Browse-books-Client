@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import { myBooks } from '../APIs/crudApi'
 import ProductCard from '../components/ProductCard'
+import Footer from '../components/Footer'
 
 const UploadBooks = () => {
 
@@ -33,6 +34,7 @@ const UploadBooks = () => {
                     </div>
                 </div>
             </section>
+            <Footer/>
         </>
   )
 }

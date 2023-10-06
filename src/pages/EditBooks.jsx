@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../components/Navbar';
 import { addBook, updateBook, uploadImage } from '../APIs/crudApi';
+import Footer from '../components/Footer';
 
 const EditBooks = () => {
     const navigate = useNavigate();
@@ -240,7 +241,9 @@ const EditBooks = () => {
                         </button>
                     </div>
                 </form>
-            </section></>
+            </section>
+            <Footer />
+        </>
     )
 }
 
