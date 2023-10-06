@@ -5,7 +5,6 @@ import Home from './pages/Home'
 import SinglePdt from './pages/SinglePdt'
 import AddBook from './pages/AddBook'
 import Favorite from './pages/Favorite'
-import MyBooks from './pages/Mybooks'
 import EditBooks from './pages/EditBooks'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,6 +12,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import { useSelector } from 'react-redux'
 import ErrorPage from './pages/ErrorPage'
 import Category from './pages/Category'
+import MyBooks from './pages/Mybooks'
 
 const App = () => {
   const userId = useSelector((state) => state.user.userDetails._id)
