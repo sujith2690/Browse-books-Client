@@ -56,7 +56,6 @@ const Navbar = () => {
     }
     const getNotification = async () => {
         const not = await allNotion()
-        console.log(not.data.notifications)
         setNotifier(not.data.notifications)
     }
     useEffect(() => {

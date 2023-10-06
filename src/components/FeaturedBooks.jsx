@@ -40,12 +40,12 @@ const FeaturedBooks = () => {
     }, [])
 
     return (
-        <section className="py-12 bg-gray-200">
+        <section className="py-12" style={{ backgroundColor: '#161616' }}>
             <div className="container mx-auto">
-                <h2 className="text-3xl md:text-3xl font-semibold mb-4 text-center">Featured Books</h2>
+                <h2 className="text-3xl md:text-3xl text-white font-semibold mb-4 text-center">Featured Books</h2>
                 <div className='flex flex-col lg:flex-row justify-between'>
                     <div>
-                        <p className='font-bold text-gray-800 mb-3'>Filter Type</p>
+                        <p className='font-bold text-gray-200 mb-3'>Filter Type</p>
                         <div className='flex justify-between flex-wrap'>
                             <button
                                 onClick={() => setNewBooks(data)}
@@ -56,7 +56,7 @@ const FeaturedBooks = () => {
                         </div>
                     </div>
                     <div>
-                        <p className='font-bold text-gray-800 mb-3 text-right'>Filter Price</p>
+                        <p className='font-bold text-gray-200 mb-3 text-right'>Filter Price</p>
                         <div className='flex justify-between max-w-[390px] w-full'>
                             <button onClick={() => filterPrice(1000)} className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>1000</button>
                             <button onClick={() => filterPrice(1500)} className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>1500</button>

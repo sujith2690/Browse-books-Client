@@ -13,9 +13,12 @@ const SearchBooks = () => {
                 const query = searchQuery
                 console.log('its working', searchQuery);
                 const response = await searchBook(query);
-                console.log(response.data, '---')
+                console.log(response.data, '--55-')
                 setSearchResults(response.data);
                 const result = response.data
+            }else{
+                console.log('------empty')
+                setSearchResults([])
             }
         } catch (error) {
             console.error('Error searching for books:', error);

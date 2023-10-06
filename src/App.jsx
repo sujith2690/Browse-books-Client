@@ -15,7 +15,6 @@ import ErrorPage from './pages/ErrorPage'
 
 const App = () => {
   const userId = useSelector((state) => state.user.userDetails._id)
-  console.log(userId, '------userToken')
   return (
     <>
       <ToastContainer />
