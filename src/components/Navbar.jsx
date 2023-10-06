@@ -25,6 +25,7 @@ const Navbar = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const user = useSelector((state) => state.user.userDetails)
+    const token = useSelector((state) => state.user.accessToken)
     const location = useLocation();
     const [open, setOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
@@ -55,11 +56,15 @@ const Navbar = () => {
         navigate('/login')
     }
     const getNotification = async () => {
-        const not = await allNotion()
-        setNotifier(not.data.notifications)
+        if (user._id) {
+            localStorage.setItem("token", token);
+            const not = await allNotion()
+            setNotifier(not.data.notifications)
+        }
     }
     useEffect(() => {
         getNotification()
+        localStorage.setItem("token", token);
     }, [])
 
     return (

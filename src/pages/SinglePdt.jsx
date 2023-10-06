@@ -3,8 +3,11 @@ import Navbar from '../components/Navbar'
 import { useParams } from 'react-router-dom'
 import { bookDetails } from '../APIs/searchApi'
 import { toast } from 'react-toastify'
+import { likeBook } from '../APIs/crudApi'
+import { useSelector } from 'react-redux'
 
 const SinglePdt = () => {
+  const user = useSelector((state)=>state.user.userDetails._id)
   const [data, setData] = useState()
   const { id } = useParams()
   const getBook = async (id) => {
@@ -15,8 +18,21 @@ const SinglePdt = () => {
   useEffect(() => {
     getBook(id)
   }, [])
-const handleLike=()=>{
-  toast.success("Book Add To Favourite")
+  const handleLike = async () => {
+    if(user){
+      console.log('here....')
+      const liked = await likeBook(id)
+      console.log(liked.data.message, '---------')
+      if (liked.data.message === 'Book UnLiked') {
+          toast.success(liked.data.message)
+          dispatch(removeFavoriteBook(liked.data.bookDetails))
+      } else {
+          toast.success(liked.data.message)
+          dispatch(addFavoriteBook(liked.data.bookDetails))
+      }
+    }else{
+      toast.warning("Please do Login")
+    }
 }
 
   return (

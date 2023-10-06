@@ -5,10 +5,11 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { deleteBook, likeBook } from '../APIs/crudApi';
 import Modal from './Modal';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addFavoriteBook, removeBook, removeFavoriteBook } from '../Redux/Features/bookSlice';
 
 const ProductCard = ({ values, userBooks }) => {
+    const user = useSelector((state) => state.user.userDetails._id)
     const dispatch = useDispatch()
     const [remove, setRemove] = useState(false)
     const [showModel, setShowModel] = useState(false)
@@ -16,7 +17,6 @@ const ProductCard = ({ values, userBooks }) => {
     const location = useLocation();
     const bookId = values._id
     const handleClose = () => setShowModel(false)
-
     const handleDelete = async () => {
         if (remove === true) {
             const response = await deleteBook(bookId)
@@ -37,15 +37,19 @@ const ProductCard = ({ values, userBooks }) => {
         if (remove) setRemove(false)
     }
     const handleLike = async () => {
-        console.log('here....')
-        const liked = await likeBook(bookId)
-        console.log(liked.data.message, '---------')
-        if (liked.data.message === 'Book UnLiked') {
-            toast.success(liked.data.message)
-            dispatch(removeFavoriteBook(liked.data.bookDetails))
+        if (user) {
+            console.log('here....')
+            const liked = await likeBook(id)
+            console.log(liked.data.message, '---------')
+            if (liked.data.message === 'Book UnLiked') {
+                toast.success(liked.data.message)
+                dispatch(removeFavoriteBook(liked.data.bookDetails))
+            } else {
+                toast.success(liked.data.message)
+                dispatch(addFavoriteBook(liked.data.bookDetails))
+            }
         } else {
-            toast.success(liked.data.message)
-            dispatch(addFavoriteBook(liked.data.bookDetails))
+            toast.warning("Please do Login")
         }
     }
     const handleMove = () => {

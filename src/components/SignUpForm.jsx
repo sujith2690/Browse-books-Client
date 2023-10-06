@@ -66,7 +66,6 @@ const SignUpForm = ({ handleSignUp }) => {
     return (
         <>
             {!otp ?
-
                 <form onSubmit={handleSubmit} className="sm:w-2/3 w-full px-4 lg:px-0 mx-auto"  >
                     <div className="pb-2 pt-4">
                         <input
