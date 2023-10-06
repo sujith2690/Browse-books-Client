@@ -126,7 +126,7 @@ const Navbar = () => {
                             <HiOutlineBell className="h-6 w-6" aria-hidden="true" />
                         </button>
                         {notes && notifier.length > 0 && (
-                            <div className="absolute right-0 z-10  w-48  mt-40 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <div className="absolute right-0 z-10 min-h-[150px] max-h-[300px] w-40 mt-40 mr-40 overflow-y-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                 {notifier.map((item, i) => {
                                     return (
                                         <p key={i} onClick={() => navigate(`/book/${item.bookId}`)} className="block px-4 py-2 text-sm cursor-pointer text-gray-700 hover:bg-gray-100 hover:font-bold">
