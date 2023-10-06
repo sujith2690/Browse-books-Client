@@ -11,13 +11,10 @@ const SearchBooks = () => {
         try {
             if (searchQuery) {
                 const query = searchQuery
-                console.log('its working', searchQuery);
                 const response = await searchBook(query);
-                console.log(response.data, '--55-')
                 setSearchResults(response.data);
                 const result = response.data
             }else{
-                console.log('------empty')
                 setSearchResults([])
             }
         } catch (error) {

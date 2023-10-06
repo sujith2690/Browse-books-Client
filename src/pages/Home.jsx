@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar'
 import FeaturedBooks from '../components/FeaturedBooks'
 import PopularCategory from '../components/PopularCategory'
 import SearchBooks from '../components/SearchBooks'
+import Footer from '../components/Footer'
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
     <SearchBooks/>
     <FeaturedBooks/>
     <PopularCategory/>
+    <Footer/>
     </>
   )
 }

@@ -5,21 +5,36 @@ import { storeBooks } from '../Redux/Features/bookSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 const FeaturedBooks = () => {
-    const dispatch = useDispatch()
-    const [data, setData] = useState([])
-    const [newBooks, setNewBooks] = useState([])
-    const [category, setCategory] = useState()
+    const dispatch = useDispatch();
+    const [data, setData] = useState([]);
+    const [newBooks, setNewBooks] = useState([]);
+    const [category, setCategory] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [booksPerPage] = useState(8); // Adjust the number of books per page
+
+
 
     const books = useSelector((state) => state.bookStore.books)
     const getFeaturedBooks = async () => {
-        const allData = await getBooks()
-        const bookDetails = allData.data.books
-        dispatch(storeBooks(bookDetails))
-        setData(books)
-        setNewBooks(books)
-        const CategoriesArray = await getCategories();
-        setCategory(CategoriesArray.data.categories)
+        try {
+            const allData = await getBooks();
+            const bookDetails = allData.data.books;
+            dispatch(storeBooks(bookDetails));
+            setData(bookDetails);
+            setNewBooks(bookDetails);
+            const CategoriesArray = await getCategories();
+            setCategory(CategoriesArray.data.categories);
+        } catch (error) {
+            console.log(error, '----------error')
+        }
     }
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    const indexOfLastBook = currentPage * booksPerPage;
+    const indexOfFirstBook = indexOfLastBook - booksPerPage;
+    const currentBooks = newBooks.slice(indexOfFirstBook, indexOfLastBook);
 
     const filterType = (category) => {
         setNewBooks(
@@ -68,19 +83,27 @@ const FeaturedBooks = () => {
                     </div>
                 </div>
                 <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" >
-                    {newBooks?.map((item, i) => {
-                        return (
-                            <div key={i} >
-                                <div className="hover:shadow-2xl hover:border-yellow-500 border-4 ease-in-out duration-300" >
-                                    <ProductCard values={item} />
-                                </div>
+                    {currentBooks.map((item, i) => (
+                        <div key={i}>
+                            <div className="hover:shadow-2xl hover:border-yellow-500 border-4 ease-in-out duration-300">
+                                <ProductCard values={item} />
                             </div>
-                        )
-                    })
-                    }
+                        </div>
+                    ))}
                 </div>
             </div>
-
+            <div className="flex justify-center mt-4">
+                {Array.from({ length: Math.ceil(newBooks.length / booksPerPage) }).map((_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => paginate(index + 1)}
+                        className={`px-4 py-2 mx-1 ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'
+                            } border border-blue-500 rounded-md hover:bg-blue-500 hover:text-white`}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
+            </div>
         </section >
     )
 }

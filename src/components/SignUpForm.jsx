@@ -30,9 +30,7 @@ const SignUpForm = ({ handleSignUp }) => {
             setLoading(true)
             try {
                 setFormValues(values)
-                console.log(values, '----values')
                 const result = await signUpApi(values)
-                console.log(result)
                 toast.success(result.data.message)
                 setLoading(false)
                 setOtp(true)
@@ -42,7 +40,6 @@ const SignUpForm = ({ handleSignUp }) => {
                 console.log(error, 'Login failed');
             }
             action.resetForm();
-            console.log('before reset')
             setLoading(false)
         }
     })

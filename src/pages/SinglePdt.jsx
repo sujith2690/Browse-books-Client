@@ -12,7 +12,6 @@ const SinglePdt = () => {
   const { id } = useParams()
   const getBook = async (id) => {
     const response = await bookDetails(id)
-    console.log(response.data)
     setData(response.data)
   }
   useEffect(() => {
@@ -20,9 +19,7 @@ const SinglePdt = () => {
   }, [])
   const handleLike = async () => {
     if(user){
-      console.log('here....')
       const liked = await likeBook(id)
-      console.log(liked.data.message, '---------')
       if (liked.data.message === 'Book UnLiked') {
           toast.success(liked.data.message)
           dispatch(removeFavoriteBook(liked.data.bookDetails))

@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import './Auth.css'
 import LoginForm from '../../components/LoginForm'
 import SignUpForm from '../../components/SignUpForm'
+import { useNavigate } from 'react-router'
 
 const Auth = () => {
+    const navigate = useNavigate()
     const [auth, setAuth] = useState(true)
     const handleLogin = () => {
         setAuth((prev) => !prev)
@@ -38,11 +40,10 @@ const Auth = () => {
                     <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
                 </div>
                 <div className="w-full py-6 z-20">
-                    <h1 className="my-6 text-6xl font-thin">BrowsBooks</h1>
+                    <h1 className="my-6 text-6xl font-thin cursor-pointer" onClick={()=>navigate('/')}>BrowsBooks</h1>
                     {auth ? <LoginForm handleLogin={handleLogin} />
                         : <SignUpForm handleSignUp={handleLogin} />
                     }
-
                 </div>
             </div>
         </section>

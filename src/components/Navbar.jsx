@@ -39,13 +39,10 @@ const Navbar = () => {
     };
     const toggleNotification = async () => {
         if (notes) {
-            console.log('.............on')
             const clear = await clearNotes()
             setNotifier([])
-            console.log(clear.data, '----')
             setNotes(!notes);
         } else {
-            console.log('.............off')
             setNotes(!notes);
         }
     };

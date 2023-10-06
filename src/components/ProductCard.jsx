@@ -21,7 +21,6 @@ const ProductCard = ({ values, userBooks }) => {
         if (remove === true) {
             const response = await deleteBook(bookId)
             dispatch(removeBook(bookId))
-            console.log('----------deleted')
             userBooks()
             toast.success('Book Deleted')
             setShowModel(false)
@@ -38,9 +37,7 @@ const ProductCard = ({ values, userBooks }) => {
     }
     const handleLike = async () => {
         if (user) {
-            console.log('here....')
             const liked = await likeBook(id)
-            console.log(liked.data.message, '---------')
             if (liked.data.message === 'Book UnLiked') {
                 toast.success(liked.data.message)
                 dispatch(removeFavoriteBook(liked.data.bookDetails))

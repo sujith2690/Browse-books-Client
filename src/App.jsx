@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ProtectedRoute from './components/ProtectedRoute'
 import { useSelector } from 'react-redux'
 import ErrorPage from './pages/ErrorPage'
+import Category from './pages/Category'
 
 const App = () => {
   const userId = useSelector((state) => state.user.userDetails._id)
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/favorite" element={<ProtectedRoute userId={userId} element={<Favorite />} />} />
         <Route path="/editBooks/:id" element={<ProtectedRoute userId={userId} element={<EditBooks />} />} />
         <Route path="/book/:id" element={<SinglePdt />} />
+        <Route path="/category/:categoryName" element={< Category />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </>

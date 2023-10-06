@@ -30,7 +30,6 @@ const EditBooks = () => {
             if (!image) {
                 values.imageUrl = imageFile
                 let book = await updateBook(bookId, values);
-                console.log(book.data.message)
                 toast.success(book.data.message)
             } else {
                 const bookId = id;
