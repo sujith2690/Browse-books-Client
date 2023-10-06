@@ -6,13 +6,13 @@ import SinglePdt from './pages/SinglePdt'
 import AddBook from './pages/AddBook'
 import Favorite from './pages/Favorite'
 import EditBooks from './pages/EditBooks'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ProtectedRoute from './components/ProtectedRoute'
 import { useSelector } from 'react-redux'
 import ErrorPage from './pages/ErrorPage'
 import Category from './pages/Category'
-import MyBooks from './pages/Mybooks'
+import UploadBooks from './pages/UploadBooks'
 
 const App = () => {
   const userId = useSelector((state) => state.user.userDetails._id)
@@ -24,7 +24,7 @@ const App = () => {
         <Route path="/login" element={<Auth />} />
         <Route path="/signUp" element={<Auth />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/myBooks" element={<ProtectedRoute userId={userId} element={<MyBooks />} />} />
+        <Route path="/myBooks" element={<ProtectedRoute userId={userId} element={<UploadBooks />} />} />
         <Route path="/addBook" element={<ProtectedRoute userId={userId} element={<AddBook />} />} />
         <Route path="/favorite" element={<ProtectedRoute userId={userId} element={<Favorite />} />} />
         <Route path="/editBooks/:id" element={<ProtectedRoute userId={userId} element={<EditBooks />} />} />

@@ -3,7 +3,8 @@ import Navbar from '../components/Navbar'
 import { myBooks } from '../APIs/crudApi'
 import ProductCard from '../components/ProductCard'
 
-const MyBooks = () => {
+const UploadBooks = () => {
+
     const [Books, setBooks] = useState([])
     const userBooks = async () => {
         const all = await myBooks()
@@ -12,9 +13,8 @@ const MyBooks = () => {
     useEffect(() => {
         userBooks()
     }, [])
-
-    return (
-        <>
+  return (
+    <>
             <Navbar />
             <section className="py-12 text-white" style={{ backgroundColor: '#161616' }} >
                 <div className="container mx-auto">
@@ -34,7 +34,7 @@ const MyBooks = () => {
                 </div>
             </section>
         </>
-    )
+  )
 }
 
-export default MyBooks
+export default UploadBooks
