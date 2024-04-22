@@ -57,8 +57,8 @@ const ProductCard = ({ values, userBooks }) => {
     return (
         <>
             {values ? (<>
-                <div className="flex justify-center items-center cursor-pointer">
-                    <div className="flex flex-col justify-between w-72 sm:w-96 h-96 bg-white bg-center text-gray-800 overflow-hidden"
+                <div className="flex justify-center items-center cursor-pointer ">
+                    <div className="flex flex-col justify-between w-72 sm:w-96 h-96 bg-white bg-center text-gray-800 overflow-hidden hover:shadow-2xl hover:border-yellow-500 border-4 ease-in-out duration-300"
 
                         style={{ backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundImage: `url(${values.imageUrl?.url})` }}>
                         <div className="flex justify-between items-center ml-4 pr-8">

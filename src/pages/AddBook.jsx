@@ -30,25 +30,26 @@ const AddBook = () => {
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues,
-    validationSchema,
+    // validationSchema,
     onSubmit: async (values, action) => {
-      if (!image) {
-        toast.error("Choose image")
-      } else {
-        try {
-          const base64 = await convertBase64(image);
-          values.imageUrl = base64
-          let book = await addBook(values)
-          dispatch(addNewBook(book.data.savedBook))
-          toast.success(book.data.message)
-        } catch (error) {
-          console.log(error)
-        }
-        imageRef.current.value = '';
-        setImage(null)
-        action.resetForm()
-        navigate('/myBooks')
-      }
+      console.log(values,'----------sujithp2690@gmail.com')
+      // if (!image) {
+      //   toast.error("Choose image")
+      // } else {
+      //   try {
+      //     const base64 = await convertBase64(image);
+      //     values.imageUrl = base64
+      //     let book = await addBook(values)
+      //     dispatch(addNewBook(book.data.savedBook))
+      //     toast.success(book.data.message)
+      //   } catch (error) {
+      //     console.log(error)
+      //   }
+      //   imageRef.current.value = '';
+      //   setImage(null)
+      //   action.resetForm()
+      //   navigate('/myBooks')
+      // }
     },
   });
   const convertBase64 = (file) => {

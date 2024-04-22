@@ -35,7 +35,7 @@ const SearchBooks = () => {
     return (
         <section className="py-12 bg-gray-200">
             <div className="container mx-auto">
-                <div className='flex items-center  gap-3'>
+                <div className='flex items-center  gap-2 flex-wrap'>
                     <h2 className="text-2xl md:text-3xl font-semibold mb-4">Search Books</h2>
                     <form className='flex gap-1 h-10 mb-4'>
                         <input

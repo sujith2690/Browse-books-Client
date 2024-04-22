@@ -35,7 +35,7 @@ const EditBooks = () => {
             } else {
                 const bookId = id;
                 const base64 = await convertBase64(image);
-                // const imgUrl = await uploadImage({ image: base64 });
+                const imgUrl = await uploadImage({ image: base64 });
                 // values.imageUrl = imgUrl.data;
                 values.imageUrl = base64;
                 // values.bookId = bookId;

@@ -12,13 +12,17 @@ const FeaturedBooks = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [booksPerPage] = useState(8); // Adjust the number of books per page
 
-
+    const [currentBooks, setCurrentBooks] = useState([])
 
     const books = useSelector((state) => state.bookStore.books)
+    const indexOfLastBook = currentPage * booksPerPage;
+    const indexOfFirstBook = indexOfLastBook - booksPerPage;
+
     const getFeaturedBooks = async () => {
         try {
             const allData = await getBooks();
             const bookDetails = allData.data.books;
+            console.log(bookDetails, '------------bookDetails')
             dispatch(storeBooks(bookDetails));
             setData(bookDetails);
             setNewBooks(bookDetails);
@@ -28,13 +32,13 @@ const FeaturedBooks = () => {
             console.log(error, '----------error')
         }
     }
+    useEffect(() => {
+        setCurrentBooks(newBooks.slice(indexOfFirstBook, indexOfLastBook));
+    }, [currentPage, newBooks]);
+
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-
-    const indexOfLastBook = currentPage * booksPerPage;
-    const indexOfFirstBook = indexOfLastBook - booksPerPage;
-    const currentBooks = newBooks.slice(indexOfFirstBook, indexOfLastBook);
 
     const filterType = (category) => {
         setNewBooks(
@@ -58,10 +62,10 @@ const FeaturedBooks = () => {
         <section className="py-12" style={{ backgroundColor: '#161616' }}>
             <div className="container mx-auto">
                 <h2 className="text-3xl md:text-3xl text-white font-semibold mb-4 text-center">Featured Books</h2>
-                <div className='flex flex-col lg:flex-row justify-between'>
+                <div className='flex flex-col lg:flex-row justify-between gap-3 p-2'>
                     <div>
                         <p className='font-bold text-gray-200 mb-3'>Filter Type</p>
-                        <div className='flex justify-between flex-wrap'>
+                        <div className='flex gap-3 flex-wrap'>
                             <button
                                 onClick={() => setNewBooks(data)}
                                 className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>All</button>
@@ -71,8 +75,8 @@ const FeaturedBooks = () => {
                         </div>
                     </div>
                     <div>
-                        <p className='font-bold text-gray-200 mb-3 text-right'>Filter Price</p>
-                        <div className='flex justify-between max-w-[390px] w-full'>
+                        <p className='font-bold text-gray-200 mb-3 lg:text-right '>Filter Price</p>
+                        <div className='flex gap-3 max-w-[390px] w-full flex-wrap'>
                             <button onClick={() => filterPrice(1000)} className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>1000</button>
                             <button onClick={() => filterPrice(1500)} className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>1500</button>
                             <button onClick={() => filterPrice(2000)} className='mr-2 bg-blue-500 rounded-sm px-2 py-1  border-none text-white hover:bg-blue-800 hover:text-white'>2000</button>
@@ -83,13 +87,30 @@ const FeaturedBooks = () => {
                     </div>
                 </div>
                 <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" >
-                    {currentBooks.map((item, i) => (
-                        <div key={i}>
-                            <div className="hover:shadow-2xl hover:border-yellow-500 border-4 ease-in-out duration-300">
-                                <ProductCard values={item} />
-                            </div>
-                        </div>
-                    ))}
+                    {
+                        currentBooks.length === 0 ? (
+                            <>
+                                {Array(4).fill().map((_, index) => (
+                                    <div key={index} className="flex flex-col rounded shadow-md w-60 sm:w-72 animate-pulse h-full hover:shadow-2xl hover:border-yellow-500 dark:border-gray-700 border-4 ease-in-out duration-300">
+                                        <div className="h-48 rounded-t dark:bg-gray-700"></div>
+                                        <div className="flex-1 px-4 py-8 space-y-4 sm:p-8 dark:bg-gray-900">
+                                            <div className="w-full h-7 rounded dark:bg-gray-700"></div>
+                                            <div className="w-full h-7 rounded dark:bg-gray-700"></div>
+                                            <div className="w-3/4 h-7 rounded dark:bg-gray-700"></div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </>
+                        ) : (
+                            currentBooks.map((item, i) => (
+                                <div key={i}>
+                                    <div className="">
+                                        <ProductCard values={item} />
+                                    </div>
+                                </div>
+                            ))
+                        )
+                    }
                 </div>
             </div>
             <div className="flex justify-center mt-4">

@@ -38,13 +38,8 @@ const Navbar = () => {
         if (user) setProfileOpen(!profileOpen);
     };
     const toggleNotification = async () => {
-        if (notes) {
-            const clear = await clearNotes()
-            setNotifier([])
-            setNotes(!notes);
-        } else {
-            setNotes(!notes);
-        }
+        setNotes(!notes);
+        setProfileOpen(false)
     };
     const handleLogout = () => {
         dispatch(resetUser())
@@ -63,12 +58,16 @@ const Navbar = () => {
         getNotification()
         localStorage.setItem("token", token);
     }, [])
-    const handleClose = async(e) => {
+    const handleClose = async (e) => {
         console.log('--------pressed')
-            // setNotifier([])
-            // setNotes(!notes);
+        // setNotifier([])
+        // setNotes(!notes);
     }
-
+    const handleClear = async () => {
+        const clear = await clearNotes()
+        setNotifier([])
+        setNotes(!notes);
+    }
     return (
         <div id='container' onClick={handleClose} className=" bg-indigo-500  ">
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -82,7 +81,7 @@ const Navbar = () => {
                             <span className="absolute -inset-0.5" />
                             <span className="sr-only">Open main menu</span>
                             {open ? (
-                                <HiX className="block h-6 w-6" aria-hidden="true" />
+                                <HiX className="block h-6 w-6 text-white" aria-hidden="true" />
                             ) : (
                                 <HiOutlineMenuAlt3 className="block h-6 w-6 text-white" aria-hidden="true" />
                             )}
@@ -116,7 +115,8 @@ const Navbar = () => {
                             type="button"
                             onClick={toggleNotification}
                             className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white hover:outline-none hover:ring-2 hover:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                        ><span className='relative text-white font-bold'>
+                        >
+                            <span className='relative text-white font-bold'>
                                 {notifier.length > 0 && (
                                     <span className="bg-red-500 rounded-full h-4 w-4 text-xs absolute top-0 right-0 -mt-1 -mr-1 flex items-center justify-center">
                                         {notifier.length}
@@ -126,7 +126,7 @@ const Navbar = () => {
                             <HiOutlineBell className="h-6 w-6" aria-hidden="true" />
                         </button>
                         {notes && notifier.length > 0 && (
-                            <div className="absolute right-0 z-10 min-h-[150px] max-h-[300px] w-40 mt-40 mr-40 overflow-y-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <div className="absolute right-0 z-10 max-h-[150px] w-40 mt-24 mr-40 overflow-y-auto rounded-md bg-white p-1 shadow-lg ">
                                 {notifier.map((item, i) => {
                                     return (
                                         <p key={i} onClick={() => navigate(`/book/${item.bookId}`)} className="block px-4 py-2 text-sm cursor-pointer text-gray-700 hover:bg-gray-100 hover:font-bold">
@@ -134,9 +134,12 @@ const Navbar = () => {
                                         </p>
                                     )
                                 })}
+                                <p onClick={handleClear} className="text-xs text-right p-1 cursor-pointer mt-2 text-gray-300 hover:text-gray-700 hover:bg-gray-100 hover:font-bold">
+                                    Clear All
+                                </p>
                             </div>
                         )}
-                        <div className="relative ml-3">
+                        <div className="relative ml-3 hidden md:block">
                             <button
                                 onClick={toggleProfileMenu}
                                 className="relative flex rounded-full bg-gray-800 text-sm hover:outline-none hover:ring-2 hover:ring-white  focus:ring-offset-gray-800"
@@ -144,7 +147,10 @@ const Navbar = () => {
                                 <span className="absolute -inset-1.5" />
                                 <span className="sr-only">Open user menu</span>
                                 <div className='flex items-center'>
-                                    <HiUserCircle className="h-8 w-8 rounded-full mr-2 text-white" aria-hidden="true" /><p className='text-white mr-2'>{user.name}</p>
+                                    <HiUserCircle className="h-8 w-8 rounded-full text-white" aria-hidden="true" />
+                                    {
+                                        user.name && <p className='text-white p-2'> {user.name}</p>
+                                    }
                                 </div>
                             </button>
                             {profileOpen && (
@@ -188,20 +194,21 @@ const Navbar = () => {
                             </Link>
                         ))
                             : path.map((item) => (
-                                <Link
-                                    key={item.name}
-                                    to={item.href}
-                                    onClick={() => setOpen(!open)}
-                                    className={classNames(
-                                        item.href === location.pathname
-                                            ? 'bg-gray-900 text-white'
-                                            : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                        'block rounded-md px-3 py-2 text-base font-medium'
-                                    )}
-                                >
-                                    {item.name}
-                                </Link>
+                                    <Link
+                                        key={item.name}
+                                        to={item.href}
+                                        onClick={() => setOpen(!open)}
+                                        className={classNames(
+                                            item.href === location.pathname
+                                                ? 'bg-gray-900 text-white'
+                                                : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                            'block rounded-md px-3 py-2 text-base font-medium'
+                                        )}
+                                    >
+                                        {item.name}
+                                    </Link>
                             ))}
+                            <p   onClick={handleLogout} className='bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium'> {user.name ? 'Sign out' : 'Login'}</p>
 
                     </div>
                 </div>
