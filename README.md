@@ -1,8 +1,42 @@
-# React + Vite
+# BrowseBooks 📚 - Client Repository
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**BrowseBooks** is a responsive and feature-rich e-commerce platform for book lovers. This repository contains the frontend code, providing users with a seamless interface for browsing, searching, and purchasing books online.
 
-Currently, two official plugins are available:
+## 🌐 Live Demo
+> [BrowseBooks - Online Book Store](https://browsbooks.netlify.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+---
+
+## 📋 Features
+
+### 📖 User Features
+- **🔑 Signup & Login**: User authentication with OTP verification (via Twilio).
+- **📚 Book Listings**: Comprehensive product pages, with image zoom and detailed book information.
+- **📂 Categories & Filters**: Filter books by category, with options for price range and sorting.
+- **❤️ Wishlist**: Save favorite books to a wishlist.
+
+
+---
+
+## 🛠️ Technologies Used
+
+- **Frontend**: React, Tailwind CSS, Bootstrap
+- **State Management**: Context API
+- **HTTP Requests**: Axios
+- **Design**: UI and layout created in Figma
+- **Libraries & Integrations**: Twilio for OTP, Razorpay for payments, Cloudinary for image storage
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- **Node.js** (v14+)
+- **NPM** (Node Package Manager)
+
+### Installation
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/yourusername/BrowseBooks-client.git
+   cd BrowseBooks-client
