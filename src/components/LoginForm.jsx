@@ -28,7 +28,6 @@ const LoginForm = ({ handleLogin }) => {
                 const result = await logInApi(values)
                 const success = result.data.success
                 if (success) {
-
                     dispatch(userDetails(result.data.User));
                     dispatch(accessToken(result.data.Token));
                     localStorage.setItem("token", result.data.Token);
