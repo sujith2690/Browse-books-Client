@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { logInApi } from '../APIs/authApi';
 import { useDispatch } from 'react-redux'
 import { accessToken, userDetails } from '../Redux/Features/userSlice';
+import LoadingContent from './LoadingContent';
 
 
 const LoginForm = ({ handleLogin }) => {
@@ -82,11 +83,7 @@ const LoginForm = ({ handleLogin }) => {
                 <p className='cursor-pointer' onClick={handleLogin} >Register with us</p>
             </div>
             {loading ? <div className="pb-2 pt-4">
-                <div className="flex items-center justify-center space-x-2">
-                    <div className="w-4 h-4 rounded-full animate-pulse bg-indigo-500"></div>
-                    <div className="w-4 h-4 rounded-full animate-pulse bg-indigo-500"></div>
-                    <div className="w-4 h-4 rounded-full animate-pulse bg-indigo-500"></div>
-                </div>
+                <LoadingContent />
             </div> : <div className="pb-2 pt-4">
                 <button
                     type="submit"

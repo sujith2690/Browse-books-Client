@@ -11,11 +11,13 @@ import { getCategories } from '../APIs/bookApi';
 import { useDispatch } from 'react-redux';
 import { addNewBook } from '../Redux/Features/bookSlice';
 import Footer from '../components/Footer';
+import LoadingContent from '../components/LoadingContent';
 
 const AddBook = () => {
   const dispatch = useDispatch()
   const imageRef = useRef();
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false)
   const [bookTypes, setBookTypes] = useState([])
 
   const navigate = useNavigate();
@@ -30,26 +32,28 @@ const AddBook = () => {
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues,
-    // validationSchema,
+    validationSchema,
     onSubmit: async (values, action) => {
-      console.log(values,'----------sujithp2690@gmail.com')
-      // if (!image) {
-      //   toast.error("Choose image")
-      // } else {
-      //   try {
-      //     const base64 = await convertBase64(image);
-      //     values.imageUrl = base64
-      //     let book = await addBook(values)
-      //     dispatch(addNewBook(book.data.savedBook))
-      //     toast.success(book.data.message)
-      //   } catch (error) {
-      //     console.log(error)
-      //   }
-      //   imageRef.current.value = '';
-      //   setImage(null)
-      //   action.resetForm()
-      //   navigate('/myBooks')
-      // }
+      setLoading((prev) => !prev)
+      console.log(values, '----------sujithp2690@gmail.com')
+      if (!image) {
+        toast.error("Choose image")
+      } else {
+        try {
+          const base64 = await convertBase64(image);
+          values.imageUrl = base64
+          let book = await addBook(values)
+          dispatch(addNewBook(book.data.savedBook))
+          toast.success(book.data.message)
+        } catch (error) {
+          console.log(error)
+        }
+        imageRef.current.value = '';
+        setImage(null)
+        action.resetForm()
+        setLoading(!loading)
+        navigate('/myBooks')
+      }
     },
   });
   const convertBase64 = (file) => {
@@ -214,7 +218,7 @@ const AddBook = () => {
               ref={imageRef}
               onChange={onImageChange}
               accept="image/png, image/gif, image/jpeg"
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${touched.imageFile && errors.imageFile ? 'border-red-500' : ''}`}
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline ${touched.imageFile && errors.imageFile ? 'border-red-500' : ''}`}
             />
           </div>
           <div className="col-span-full">
@@ -234,13 +238,16 @@ const AddBook = () => {
               <p className="text-red-500 text-xs italic">{errors.description}</p>
             ) : null}
           </div>
-          <div className="flex bg-red justify-end mx-6 mb-6">
-            <button
-              type="submit"
-              className="font-semibold flex justify-center items-center py-2 px-3 rounded-2xl cursor-pointer bg-gray-100 text-gray-800 col-end-7"
-            >
-              Submit
-            </button>
+          <div className="font-semibold flex justify-center items-center py-2 px-3 rounded cursor-pointer bg-indigo-800 w-full text-white hover:text-gray-300 col-end-7"
+          >
+            {
+              !loading ?
+                <button
+                  type="submit"
+                >
+                  Submit
+                </button> : <LoadingContent />
+            }
           </div>
         </form>
       </section>
