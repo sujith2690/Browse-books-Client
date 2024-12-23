@@ -8,10 +8,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '../components/Navbar';
 import { addBook, updateBook, uploadImage } from '../APIs/crudApi';
 import Footer from '../components/Footer';
+import LoadingContent from '../components/LoadingContent';
 
 const EditBooks = () => {
     const navigate = useNavigate();
     const imageRef = useRef();
+    const [loading, setLoading] = useState(false)
     const [image, setImage] = useState(null);
     const [imageFile, setImageFile] = useState(null)
     const [allCategories, setAllCategories] = useState()
@@ -25,6 +27,7 @@ const EditBooks = () => {
     const { id } = useParams()
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading((prev) => !prev)
         try {
             const bookId = id;
             let values = bookData;
@@ -48,6 +51,7 @@ const EditBooks = () => {
             setBookData({
                 title: '', category: '', description: '', author: '', price: '',
             });
+            setLoading((prev) => !prev)
             navigate('/myBooks');
         } catch (error) {
             console.log(error);
@@ -109,141 +113,146 @@ const EditBooks = () => {
     }, [id])
 
     return (
-        <>
+        <div className='h-screen bg-slate-600'>
             <Navbar />
             <ToastContainer />
-            <section className="p-6 bg-gray-800 text-gray-50 grid h-[90vh] w-full md:grid-cols-[2fr,4fr]  ">
-                <div className="flex justify-center">
-                    <div className="">
-                        <p className="font-medium">New Book</p>
-                        <p className="text-xs"></p>
-                        <div className="col-span-full">
-                            <label htmlFor="imageFile" className="text-sm">
-                                Book Image
-                            </label>
-                            <div className="w-[17rem] relative ">
-                                <img
-                                    src={image ? URL.createObjectURL(image) : imageFile?.url}
-                                    alt=""
-                                    className="relative object-contain rounded-md bg-gray-500"
-                                />
-                                <button
-                                    type="button"
-                                    className="absolute bottom-[.3rem] right-[.3rem] px-4 py-2 border rounded-md border-gray-100"
-                                    onClick={() => imageRef.current.click()}
-                                >
-                                    <BsFillPencilFill />
-                                </button>
+            <div className=' h-full flex flex-col justify-between'>
+                <section className="p-6 h-full  text-gray-50 grid w-full md:grid-cols-[2fr,4fr] overflow-y-scroll ">
+                    <div className="flex justify-center">
+                        <div className="">
+                            <p className="font-medium">Book Details</p>
+                            <p className="text-xs"></p>
+                            <div className="col-span-full">
+                                <label htmlFor="imageFile" className="text-sm">
+                                    Book Image
+                                </label>
+                                <div className="w-[17rem] relative ">
+                                    <img
+                                        src={image ? URL.createObjectURL(image) : imageFile?.url}
+                                        alt=""
+                                        className="relative object-contain rounded-md bg-gray-500"
+                                    />
+                                    <button
+                                        type="button"
+                                        className="absolute bottom-[.3rem] right-[.3rem] px-4 py-2 border rounded-md border-gray-100"
+                                        onClick={() => imageRef.current.click()}
+                                    >
+                                        <BsFillPencilFill />
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <form onSubmit={handleSubmit} className="flex flex-col gap-5 pt-16">
-                    <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3 ">
-                        <div className="col-span-full sm:col-span-3">
-                            <label htmlFor="title" className="text-sm">
-                                Title
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-5 pt-16">
+                        <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3 ">
+                            <div className="col-span-full sm:col-span-3">
+                                <label htmlFor="title" className="text-sm">
+                                    Title
+                                </label>
+                                <input
+                                    value={bookData.title}
+                                    name="title"
+                                    id="title"
+                                    type="text"
+                                    placeholder="Title"
+                                    required
+                                    className={`w-full p-2 outline-none rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 `}
+                                    onChange={(e) => setBookData({ ...bookData, title: e.target.value })} // Update bookData on change
+                                />
+                            </div>
+                            <div className="col-span-full sm:col-span-3">
+                                <label className="text-sm">Book Type</label>
+                                <select
+                                    name="category"
+                                    id="category"
+                                    className="w-full p-2 outline-none rounded-md focus:ring focus:ring-indigo-500 border-gray-700 text-gray-900 capitalize"
+                                    value={bookData.category}
+                                    onChange={(e) => setBookData({ ...bookData, category: e.target.value })}
+                                >
+                                    <option value="" className="" disabled defaultValue>
+                                        Choose Book
+                                    </option>
+                                    {allCategories?.map((item, i) => {
+                                        return (
+                                            <option key={i} value={item} className="uppercase">
+                                                {item}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                            </div>
+                            <div className="col-span-full sm:col-span-3">
+                                <label htmlFor="author" className="text-sm">
+                                    Author
+                                </label>
+                                <input
+                                    value={bookData.author}
+                                    onChange={(e) => setBookData({ ...bookData, author: e.target.value })}
+                                    name="author"
+                                    id="author"
+                                    type="text"
+                                    required
+                                    placeholder="Author"
+                                    className={`w-full p-2 outline-none rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 `}
+                                />
+
+                            </div>
+                            <div className="col-span-full sm:col-span-3">
+                                <label className="text-sm">Book price</label>
+                                <input
+                                    value={bookData.price}
+                                    onChange={(e) => setBookData({ ...bookData, price: e.target.value })}
+                                    name="price"
+                                    id="price"
+                                    type="number"
+                                    required
+                                    placeholder="Price"
+                                    className={`w-full p-2 outline-none rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 `}
+                                />
+
+                            </div>
+                        </div>
+                        <div className=''>
+                            <input
+                                ref={imageRef}
+                                onChange={onImageChange}
+
+                                type="file"
+                                name="myImage"
+                                accept="image/png, image/gif, image/jpeg"
+                                className={`shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline`}
+                            />
+                        </div>
+                        <div className="col-span-full">
+                            <label htmlFor="description" className="text-sm">
+                                Description
                             </label>
-                            <input
-                                value={bookData.title}
-                                name="title"
-                                id="title"
-                                type="text"
-                                placeholder="Title"
+                            <textarea
+                                value={bookData.description}
+                                onChange={(e) => setBookData({ ...bookData, description: e.target.value })}
                                 required
-                                className={`w-full p-2 outline-none rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 `}
-                                onChange={(e) => setBookData({ ...bookData, title: e.target.value })} // Update bookData on change
-                            />
-                        </div>
-                        <div className="col-span-full sm:col-span-3">
-                            <label className="text-sm">Book Type</label>
-                            <select
-                                name="category"
-                                id="category"
-                                className="w-full p-2 outline-none rounded-md focus:ring focus:ring-indigo-500 border-gray-700 text-gray-900 capitalize"
-                                value={bookData.category}
-                                onChange={(e) => setBookData({ ...bookData, category: e.target.value })}
-                            >
-                                <option value="" className="" disabled defaultValue>
-                                    Choose Book
-                                </option>
-                                {allCategories?.map((item, i) => {
-                                    return (
-                                        <option key={i} value={item} className="uppercase">
-                                            {item}
-                                        </option>
-                                    );
-                                })}
-                            </select>
-                        </div>
-                        <div className="col-span-full sm:col-span-3">
-                            <label htmlFor="author" className="text-sm">
-                                Author
-                            </label>
-                            <input
-                                value={bookData.author}
-                                onChange={(e) => setBookData({ ...bookData, author: e.target.value })}
-                                name="author"
-                                id="author"
-                                type="text"
-                                required
-                                placeholder="Author"
-                                className={`w-full p-2 outline-none rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 `}
-                            />
+                                name="description"
+                                id="description"
+                                className={`w-full outline-none p-2  rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 `}
+                            ></textarea>
 
                         </div>
-                        <div className="col-span-full sm:col-span-3">
-                            <label className="text-sm">Book price</label>
-                            <input
-                                value={bookData.price}
-                                onChange={(e) => setBookData({ ...bookData, price: e.target.value })}
-                                name="price"
-                                id="price"
-                                type="number"
-                                required
-                                placeholder="Price"
-                                className={`w-full p-2 outline-none rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 `}
-                            />
-
-                        </div>
-                    </div>
-                    <div className=''>
-                        <input
-                            ref={imageRef}
-                            onChange={onImageChange}
-
-                            type="file"
-                            name="myImage"
-                            accept="image/png, image/gif, image/jpeg"
-                            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-                        />
-                    </div>
-                    <div className="col-span-full">
-                        <label htmlFor="description" className="text-sm">
-                            Description
-                        </label>
-                        <textarea
-                            value={bookData.description}
-                            onChange={(e) => setBookData({ ...bookData, description: e.target.value })}
-                            required
-                            name="description"
-                            id="description"
-                            className={`w-full outline-none p-2  rounded-md focus:ring focus:ri focus:ri border-gray-700 text-gray-900 `}
-                        ></textarea>
-
-                    </div>
-                    <div className="flex bg-red justify-end mx-6 mb-6">
-                        <button
-                            type="submit"
-                            className="font-semibold flex justify-center items-center py-2 px-3 rounded-2xl cursor-pointer bg-gray-100 text-gray-800 col-end-7"
+                        <div className="font-semibold flex justify-center items-center py-2 px-3 rounded cursor-pointer bg-indigo-800 w-full text-white hover:text-gray-300 col-end-7"
                         >
-                            Submit
-                        </button>
-                    </div>
-                </form>
-            </section>
-            <Footer />
-        </>
+                            {
+                                !loading ?
+                                    <button
+                                        type="submit"
+                                    >
+                                        Submit
+                                    </button> : <LoadingContent />
+                            }
+                        </div>
+                    </form>
+                </section>
+                <Footer />
+            </div>
+        </div>
     )
 }
 
