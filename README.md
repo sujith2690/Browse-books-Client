@@ -14,7 +14,7 @@
 - **🔑 Signup & Login**: User authentication with OTP verification (via Twilio).
 - **📚 Book Listings**: Comprehensive product pages, with image zoom and detailed book information.
 - **📂 Categories & Filters**: Filter books by category, with options for price range and sorting.
-- **❤️ Wishlist**: Save favorite books to a wishlist.
+- **❤️ Wishlist**: Save favourite books to a wishlist.
 
 
 ---
@@ -38,5 +38,5 @@
 ### Installation
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/yourusername/BrowseBooks-client.git
+   git clone https://github.com/sujith2690/Browse-books-Client.git
    cd BrowseBooks-client
